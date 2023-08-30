@@ -13,11 +13,7 @@ namespace data_access.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            
-
-            //builder.
-                //.HasMaxLength(255).HasCheckConstraint("CK_YourEntity_Email", "Email LIKE '%_@_%._%'");
-
+            builder.HasCheckConstraint("CK_YourEntity_Email", "Email LIKE '%_@_%._%'");
         }
     }
 }
