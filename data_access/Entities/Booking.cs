@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace data_access.Entities
 {
-    public class Booking
+    public class Booking : IEntity
     {
         public int Id { get; set; }
         public DateTime BookingDate { get; set; }
         public bool? Status { get; set; }
-        public User User { get; set; }
-        public Ticket Ticket{ get; set; }
+        public int UserId { get; set; }
+        public User? User { get; set; }
+        public List<Ticket> Tickets { get; set; } = new();
     }
 }
