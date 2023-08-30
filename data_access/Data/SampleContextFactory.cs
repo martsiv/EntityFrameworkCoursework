@@ -9,20 +9,20 @@ using Microsoft.Extensions.Configuration;
 
 namespace data_access.Data
 {
-    public class SampleContextFactory : IDesignTimeDbContextFactory<ApplicationContext>
-    {
-        public ApplicationContext CreateDbContext(string[] args)
-        {
-            var optionsBuilder = new DbContextOptionsBuilder<ApplicationContext>();
+    //public class SampleContextFactory : IDesignTimeDbContextFactory<ApplicationContext>
+    //{
+    //    public ApplicationContext CreateDbContext(string[] args)
+    //    {
+    //        var optionsBuilder = new DbContextOptionsBuilder<ApplicationContext>();
 
-            ConfigurationBuilder builder = new ConfigurationBuilder();
-            builder.SetBasePath(Directory.GetCurrentDirectory());
-            builder.AddJsonFile("appsettings.json");
-            IConfigurationRoot config = builder.Build();
+    //        ConfigurationBuilder builder = new ConfigurationBuilder();
+    //        builder.SetBasePath(Directory.GetCurrentDirectory());
+    //        builder.AddJsonFile("appsettings.json");
+    //        IConfigurationRoot config = builder.Build();
 
-            string connectionString = config.GetConnectionString("MyDbConnection");
-            optionsBuilder.UseSqlServer(connectionString);
-            return new ApplicationContext(optionsBuilder.Options);
-        }
-    }
+    //        string connectionString = config.GetConnectionString("MyDbConnection");
+    //        optionsBuilder.UseSqlServer(connectionString);
+    //        return new ApplicationContext(optionsBuilder.Options);
+    //    }
+    //}
 }

@@ -25,6 +25,7 @@ namespace WpfClient
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new ViewModel.ViewModel();
         }
     }
 }

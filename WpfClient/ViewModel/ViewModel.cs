@@ -32,28 +32,21 @@ namespace WpfClient.ViewModel
         public IEnumerable<Booking> Bookings => bookings;
         public IEnumerable<CinemaHall> CinemaHalls => cinemaHalls;
         public IEnumerable<Film> Films => films;
+        [DependsOn(nameof(genres))]
         public IEnumerable<Genre> Genres => genres;
         public IEnumerable<MovieShow> MovieShows => movieShows;
         public IEnumerable<Rating> Ratings => ratings;
         public IEnumerable<Ticket> Tickets => tickets;
         public IEnumerable<TicketStatus> TicketStatuses => ticketStatuses;
         public IEnumerable<User> Users => users;
-        private IUoW unitOfWork = null;
+        private IUoW unitOfWork = new UnitOfWork();
         public ViewModel()
         {
             //We extract the connection string from the configuration JSON file.
             //We create a DbContextOption and pass it to the constructor.
-            var builder = new ConfigurationBuilder();
-            builder.SetBasePath(Directory.GetCurrentDirectory());
-            builder.AddJsonFile("appsettings.json");
-            var config = builder.Build();
-            string connectionString = config.GetConnectionString("MyDbConnection");
-
-            var optionBuilder = new DbContextOptionsBuilder<ApplicationContext>();
-            var options = optionBuilder.UseSqlServer(connectionString).Options;
-            unitOfWork = new UnitOfWork(options);
+            
             //---------------------------------------------------------------------
-            genres = new(unitOfWork.GenreRepo.Get());
+            //genres = new(unitOfWork.GenreRepo.Get());
             //Commands
             loadGenresCmd = new((o) => LoadGenres());
 
@@ -63,7 +56,7 @@ namespace WpfClient.ViewModel
         public ICommand LoadGenresCmd => loadGenresCmd;
         public void LoadGenres()
         {
-            genres = new( unitOfWork.GenreRepo.Get());
+            genres = new(unitOfWork.GenreRepo.Get());
         }
     }
 }

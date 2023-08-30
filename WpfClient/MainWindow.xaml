@@ -6,11 +6,7 @@
         xmlns:local="clr-namespace:WpfClient"
         xmlns:vm="clr-namespace:WpfClient.ViewModel"
         mc:Ignorable="d"
-        d:DataContext="{d:DesignInstance Type=vm:ViewModel}"
         Title="MainWindow" Height="450" Width="800">
-    <Window.DataContext>
-        <vm:ViewModel/>
-    </Window.DataContext>
     <StackPanel>
         <DataGrid x:Name="tableView" ItemsSource="{Binding Genres }"></DataGrid>
         <Button Command="{Binding  LoadGenresCmd}" >Button</Button>
