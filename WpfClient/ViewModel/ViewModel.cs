@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using data_access.Data;
 using data_access.Entities;
+using data_access.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using PropertyChanged;
 using static System.Reflection.Metadata.BlobBuilder;
 
@@ -29,9 +34,22 @@ namespace WpfClient.ViewModel
         public IEnumerable<Ticket> Tickets => tickets;
         public IEnumerable<TicketStatus> TicketStatuses => ticketStatuses;
         public IEnumerable<User> Users => users;
+        private IUoW unitOfWork = null;
         private ViewModel()
         {
-            
+            //We extract the connection string from the configuration JSON file.
+            //We create a DbContextOption and pass it to the constructor.
+            var builder = new ConfigurationBuilder();
+            builder.SetBasePath(Directory.GetCurrentDirectory());
+            builder.AddJsonFile("appsettings.json");
+            var config = builder.Build();
+            string connectionString = config.GetConnectionString("MyDbConnection");
+
+            var optionBuilder = new DbContextOptionsBuilder<ApplicationContext>();
+            var options = optionBuilder.UseSqlServer(connectionString).Options;
+            unitOfWork = new UnitOfWork(options);
+            //---------------------------------------------------------------------
+
         }
     }
 }
