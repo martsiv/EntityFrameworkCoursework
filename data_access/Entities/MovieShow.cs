@@ -10,7 +10,7 @@ namespace data_access.Entities
     {
         public int Id { get; set; }
         public DateTime StartDateTime { get; set; }
-        public TimeSpan Duration { get; set; }
+        //public TimeSpan Duration { get; set; }
         public int FilmId { get; set; }
         public Film? Film { get; set; }
         public int CinemaHallId { get; set; }
