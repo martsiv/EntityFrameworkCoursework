@@ -1,6 +1,8 @@
 ﻿using data_access.Data.Configurations;
 using data_access.Entities;
+using data_access.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
@@ -24,6 +26,7 @@ namespace data_access.Data
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
                        : base(options) { }
+       
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new BookingConfiguration());
