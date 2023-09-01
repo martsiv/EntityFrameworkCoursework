@@ -32,7 +32,6 @@ namespace WpfClient.ViewModel
         public IEnumerable<Booking> Bookings => bookings;
         public IEnumerable<CinemaHall> CinemaHalls => cinemaHalls;
         public IEnumerable<Film> Films => films;
-        [DependsOn(nameof(genres))]
         public IEnumerable<Genre> Genres => genres;
         public IEnumerable<MovieShow> MovieShows => movieShows;
         public IEnumerable<Rating> Ratings => ratings;
@@ -42,21 +41,16 @@ namespace WpfClient.ViewModel
         private IUoW unitOfWork = new UnitOfWork();
         public ViewModel()
         {
-            //We extract the connection string from the configuration JSON file.
-            //We create a DbContextOption and pass it to the constructor.
-            
-            //---------------------------------------------------------------------
-            //genres = new(unitOfWork.GenreRepo.Get());
-            //Commands
             loadGenresCmd = new((o) => LoadGenres());
-
-
         }
         private readonly RelayCommand loadGenresCmd;
         public ICommand LoadGenresCmd => loadGenresCmd;
         public void LoadGenres()
         {
-            genres = new(unitOfWork.GenreRepo.Get());
+            var res = unitOfWork.GenreRepo.Get();
+            genres.Clear();
+            foreach (var item in res) 
+                genres.Add(item);
         }
     }
 }

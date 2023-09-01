@@ -6,9 +6,27 @@
         xmlns:local="clr-namespace:WpfClient"
         xmlns:vm="clr-namespace:WpfClient.ViewModel"
         mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=vm:ViewModel}"
         Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <vm:ViewModel/>
+    </Window.DataContext>
     <StackPanel>
+        <TextBlock Text="Data grid with genres:"/>
         <DataGrid x:Name="tableView" ItemsSource="{Binding Genres }"></DataGrid>
+
+        <TextBlock Text="List box with genres:"/>
+        <ListBox ItemsSource="{Binding Genres}" SelectedIndex="0">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="5">
+                        <TextBlock Text="{Binding Path=Id}" />
+                        <TextBlock Text="{Binding Path=Name}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        
         <Button Command="{Binding  LoadGenresCmd}" >Button</Button>
     </StackPanel>
 </Window>
