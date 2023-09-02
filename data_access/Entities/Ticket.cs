@@ -15,7 +15,7 @@ namespace data_access.Entities
         public TicketStatus TicketStatus { get; set; }
         public int MovieShowId { get; set; }
         public MovieShow? MovieShow { get; set; }
-        public int BookingId { get; set; }
+        public int? BookingId { get; set; }
         public Booking? Booking { get; set; }
     }
 }

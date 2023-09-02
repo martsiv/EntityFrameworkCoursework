@@ -42,6 +42,7 @@ namespace WpfClient.ViewModel
         public ViewModel()
         {
             loadGenresCmd = new((o) => LoadGenres());
+            loadFilmsCmd = new((o) => LoadFilms());
         }
         private readonly RelayCommand loadGenresCmd;
         public ICommand LoadGenresCmd => loadGenresCmd;
@@ -51,6 +52,15 @@ namespace WpfClient.ViewModel
             genres.Clear();
             foreach (var item in res) 
                 genres.Add(item);
+        }
+        private readonly RelayCommand loadFilmsCmd;
+        public ICommand LoadFilmsCmd => loadFilmsCmd;
+        public void LoadFilms()
+        {
+            var res = unitOfWork.FilmRepo.Get(includeProperties: "Genre,Rating");
+            films.Clear();
+            foreach (var item in res)
+                films.Add(item);
         }
     }
 }

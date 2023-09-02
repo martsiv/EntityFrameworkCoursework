@@ -8,25 +8,90 @@
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=vm:ViewModel}"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <vm:DateTimeToYearConverter x:Key="DateTimeToYearConverter" />
+    </Window.Resources>
     <Window.DataContext>
         <vm:ViewModel/>
     </Window.DataContext>
     <StackPanel>
-        <TextBlock Text="Data grid with genres:"/>
-        <DataGrid x:Name="tableView" ItemsSource="{Binding Genres }"></DataGrid>
-
-        <TextBlock Text="List box with genres:"/>
-        <ListBox ItemsSource="{Binding Genres}" SelectedIndex="0">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Margin="5">
-                        <TextBlock Text="{Binding Path=Id}" />
-                        <TextBlock Text="{Binding Path=Name}" />
+        <TabControl>
+            <TabItem Header="Files">
+                <Border  BorderBrush="CornflowerBlue"  BorderThickness="3">
+                    <StackPanel>
+                        <Border  BorderBrush="BlueViolet"  BorderThickness="3">
+                            <StackPanel Background="AliceBlue">
+                                <TextBlock HorizontalAlignment="Center">Full info</TextBlock>
+                                <Grid >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                                        <ColumnDefinition Width="1.5*"></ColumnDefinition>
+                                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
+                                        <TextBlock Text="Name: "/>
+                                        <TextBlock x:Name="FilmNameTextBlock" Text="{Binding SelectedItem.Name, ElementName=FilmsListBox}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal">
+                                        <TextBlock Text="Year: "/>
+                                        <TextBlock x:Name="FilmYearTextBlock" Text="{Binding SelectedItem.Year, ElementName=FilmsListBox, Converter={StaticResource DateTimeToYearConverter}}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Horizontal">
+                                        <TextBlock Text="Director: "/>
+                                        <TextBlock x:Name="FilmDirectorTextBlock" Text="{Binding SelectedItem.Director, ElementName=FilmsListBox}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal">
+                                        <TextBlock Text="Genre: "/>
+                                        <TextBlock x:Name="FilmGenreTextBlock" Text="{Binding SelectedItem.Genre.Name, ElementName=FilmsListBox}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Grid.Row="1"  Grid.RowSpan="2" Orientation="Horizontal">
+                                        <TextBlock Text="Duration: "/>
+                                        <TextBlock x:Name="FilmDurationTextBlock" Text="{Binding SelectedItem.Duration, ElementName=FilmsListBox}"/>
+                                    </StackPanel>
+                                    <TextBlock Grid.Column="2" Grid.Row="0" Text="Description: "/>
+                                    <StackPanel Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Orientation="Horizontal">
+                                        <TextBlock x:Name="FilmDescriptionTextBlock" Text="{Binding SelectedItem.Description, ElementName=FilmsListBox}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="3" Grid.Row="0" Orientation="Horizontal">
+                                        <TextBlock Text="Rating: "/>
+                                        <TextBlock x:Name="FilmRatingEstimateTextBlock" Text="{Binding SelectedItem.Rating.Estimate, ElementName=FilmsListBox}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="3" Grid.Row="1" Grid.RowSpan="2" Orientation="Horizontal">
+                                        <TextBlock Text="Review: "/>
+                                        <TextBlock x:Name="FilmRatingReviewTextBlock" Text="{Binding SelectedItem.Description, ElementName=FilmsListBox}"/>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                        <Border  BorderBrush="BlueViolet"  BorderThickness="3">
+                            <ListBox x:Name="FilmsListBox" ItemsSource="{Binding Films}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Path=Id}"/>
+                                            <TextBlock Text="{Binding Path=Name}"/>
+                                            <TextBlock Text="{Binding Path=Year}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Border>
                     </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        
+                </Border>
+            </TabItem>
+            <TabItem Header="Shows"></TabItem>
+            <TabItem Header="Tickets"></TabItem>
+            <TabItem Header="Bookings"></TabItem>
+            <TabItem Header="Users"></TabItem>
+        </TabControl>
+
         <Button Command="{Binding  LoadGenresCmd}" >Button</Button>
+        <Button Command="{Binding  LoadFilmsCmd}" >Load Films</Button>
     </StackPanel>
 </Window>
