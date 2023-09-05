@@ -33,42 +33,42 @@
                                     </Grid.ColumnDefinitions>
                                     <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
                                         <TextBlock Text="Name: "/>
-                                        <TextBlock x:Name="FilmNameTextBlock" Text="{Binding Path=SelectedItem.Name, ElementName=FilmsListBox}"/>
+                                        <TextBlock Text="{Binding Path=SelectedItem.Name, ElementName=FilmsListBox}"/>
                                     </StackPanel>
                                     <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal">
                                         <TextBlock Text="Year: "/>
-                                        <TextBlock x:Name="FilmYearTextBlock" Text="{Binding SelectedItem.Year, ElementName=FilmsListBox, Converter={StaticResource DateTimeToYearConverter}}"/>
+                                        <TextBlock Text="{Binding SelectedItem.Year, ElementName=FilmsListBox, Converter={StaticResource DateTimeToYearConverter}}"/>
                                     </StackPanel>
                                     <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Horizontal">
                                         <TextBlock Text="Director: "/>
-                                        <TextBlock x:Name="FilmDirectorTextBlock" Text="{Binding SelectedItem.Director, ElementName=FilmsListBox}"/>
+                                        <TextBlock Text="{Binding SelectedItem.Director, ElementName=FilmsListBox}"/>
                                     </StackPanel>
                                     <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal">
                                         <TextBlock Text="Genre: "/>
-                                        <TextBlock x:Name="FilmGenreTextBlock" Text="{Binding SelectedItem.Genre.Name, ElementName=FilmsListBox}"/>
+                                        <TextBlock Text="{Binding SelectedItem.Genre.Name, ElementName=FilmsListBox}"/>
                                     </StackPanel>
                                     <StackPanel Grid.Column="1" Grid.Row="1"  Grid.RowSpan="2" Orientation="Horizontal">
                                         <TextBlock Text="Duration: "/>
-                                        <TextBlock x:Name="FilmDurationTextBlock" Text="{Binding SelectedItem.Duration, ElementName=FilmsListBox}"/>
+                                        <TextBlock Text="{Binding SelectedItem.Duration, ElementName=FilmsListBox}"/>
                                     </StackPanel>
                                     <TextBlock Grid.Column="2" Grid.Row="0" Text="Description: "/>
                                     <StackPanel Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Orientation="Horizontal">
-                                        <TextBlock x:Name="FilmDescriptionTextBlock" Text="{Binding SelectedItem.Description, ElementName=FilmsListBox}"/>
+                                        <TextBlock Text="{Binding SelectedItem.Description, ElementName=FilmsListBox}"/>
                                     </StackPanel>
                                     <StackPanel Grid.Column="3" Grid.Row="0" Orientation="Horizontal">
                                         <TextBlock Text="Rating: "/>
-                                        <TextBlock x:Name="FilmRatingEstimateTextBlock" Text="{Binding SelectedItem.Rating.Estimate, ElementName=FilmsListBox}"/>
+                                        <TextBlock Text="{Binding SelectedItem.Rating.Estimate, ElementName=FilmsListBox}"/>
                                     </StackPanel>
                                     <StackPanel Grid.Column="3" Grid.Row="1" Grid.RowSpan="2" Orientation="Horizontal">
                                         <TextBlock Text="Review: "/>
-                                        <TextBlock x:Name="FilmRatingReviewTextBlock" Text="{Binding SelectedItem.Description, ElementName=FilmsListBox}"/>
+                                        <TextBlock Text="{Binding SelectedItem.Description, ElementName=FilmsListBox}"/>
                                     </StackPanel>
                                 </Grid>
                             </StackPanel>
                         </Border>
                         <Border  BorderBrush="BlueViolet"  BorderThickness="3">
-                            <ScrollViewer Name="scroll" VerticalScrollBarVisibility="Auto" CanContentScroll="True" Height="300">
-                                <ListBox x:Name="FilmsListBox" ItemsSource="{Binding Films}" Background="AliceBlue">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True" Height="300">
+                                <ListBox ItemsSource="{Binding Films}" Background="AliceBlue">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
@@ -86,10 +86,12 @@
                                 <ColumnDefinition></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Button Grid.Column="0" Width="100" Command="{Binding  LoadFilmsCmd}" Content="Load Films" Template="{StaticResource btTemplate}"/>
                             <Button Grid.Column="1" Width="100" Command="{Binding AddFilmCmd}" Content="Add new" Template="{StaticResource btTemplate}"/>
                             <Button Grid.Column="2" Width="100" Command="{Binding EditFilmCmd}" Content="Edit" Template="{StaticResource btTemplate}"  CommandParameter="{Binding ElementName=FilmsListBox, Path=SelectedItem}"/>
+                            <Button Grid.Column="3" Width="100" Command="{Binding DeleteFilmCmd}" Content="Delete" Template="{StaticResource btTemplate}"  CommandParameter="{Binding ElementName=FilmsListBox, Path=SelectedItem}"/>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -97,7 +99,9 @@
             <TabItem Header="Shows"></TabItem>
             <TabItem Header="Tickets"></TabItem>
             <TabItem Header="Bookings"></TabItem>
-            <TabItem Header="Users"></TabItem>
+            <TabItem Header="Users">
+                
+            </TabItem>
         </TabControl>
     </StackPanel>
 </Window>

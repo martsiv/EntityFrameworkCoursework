@@ -62,6 +62,7 @@ namespace WpfClient.ViewModel
 
             addFilmCmd = new((o) => AddFilm());
             editFilmCmd = new((o) => EditFilm(o));
+            deleteFilmCmd = new((o) => DeleteFilm(o));
 
             LoadCinemaHalls();
             LoadGenres();
@@ -156,20 +157,44 @@ namespace WpfClient.ViewModel
         #region Admin menu
         private readonly RelayCommand addFilmCmd;
         private readonly RelayCommand editFilmCmd;
+        private readonly RelayCommand deleteFilmCmd;
 
         public ICommand AddFilmCmd => addFilmCmd;
         public ICommand EditFilmCmd => editFilmCmd;
+        public ICommand DeleteFilmCmd => deleteFilmCmd;
         public void AddFilm()
         {
-            FilmWindow filmWindow = new FilmWindow(Genres.ToList(), new Film());
-            if (filmWindow.DialogResult == true)
+            Film film = new Film
             {
-                Film? newFilm = filmWindow.MyFilm;
-                if (newFilm == null) return;
-                //films.Add(newFilm);
-                unitOfWork.FilmRepo.Insert(newFilm);
+                Name = "",
+                Description = "",
+                Director = "",
+                Duration = TimeSpan.FromMinutes(0),
+                Year = DateTime.Now,
+                GenreId = 1,
+            };
+            unitOfWork.FilmRepo.Insert(film);
+            Rating rate = new Rating()
+            {
+                Film = film,
+                Estimate = 0,
+                Review = "",
+            };
+            unitOfWork.RatingRepo.Insert(rate);
+
+            FilmWindow filmWindow = new FilmWindow(Genres.ToList(), film);
+
+
+            if (filmWindow.ShowDialog() == true)
+            {
                 unitOfWork.Save();
                 LoadFilms();
+            }
+            else
+            {
+                unitOfWork.FilmRepo.Delete(film);
+                unitOfWork.RatingRepo.Delete(rate);
+                unitOfWork.Save();
             }
         }
         public void EditFilm(object selectedFilm)
@@ -196,8 +221,8 @@ namespace WpfClient.ViewModel
             if (filmWindow.ShowDialog() == true)
             {
                 film.Name = filmWindow.MyFilm.Name;
-                film.Description = filmWindow.MyFilm.Description; 
-                film.Director = filmWindow.MyFilm.Director; 
+                film.Description = filmWindow.MyFilm.Description;
+                film.Director = filmWindow.MyFilm.Director;
                 film.Duration = filmWindow.MyFilm.Duration;
                 film.Rating = filmWindow.MyFilm.Rating;
                 film.Year = filmWindow.MyFilm.Year;
@@ -206,6 +231,16 @@ namespace WpfClient.ViewModel
                 unitOfWork.Save();
                 LoadFilms();
             }
+        }
+        public void DeleteFilm(object selectedFilm)
+        {
+            Film? film = selectedFilm as Film;
+            if (film == null) return;
+            if (film.Genre != null)
+                unitOfWork.RatingRepo.Delete(entityToDelete: film.Rating);
+            unitOfWork.FilmRepo.Delete(film);
+            unitOfWork.Save();
+            LoadFilms();
         }
         #endregion Admin menu
     }
