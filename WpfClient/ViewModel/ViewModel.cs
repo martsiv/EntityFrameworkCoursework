@@ -59,10 +59,14 @@ namespace WpfClient.ViewModel
             loadTicketsCmd = new((o) => LoadTickets());
             loadTicketStatusesCmd = new((o) => LoadTicketStatuses());
             loadUsersCmd = new((o) => LoadUsers());
-
+            //Files
             addFilmCmd = new((o) => AddFilm());
             editFilmCmd = new((o) => EditFilm(o));
             deleteFilmCmd = new((o) => DeleteFilm(o));
+            //Users
+            addUserCmd = new((o) => AddUser());
+            editUserCmd = new((o) => EditUser(o));
+            deleteUserCmd = new((o) => DeleteUser(o));
 
             LoadCinemaHalls();
             LoadGenres();
@@ -155,6 +159,7 @@ namespace WpfClient.ViewModel
         #endregion  Load collections
 
         #region Admin menu
+        #region Files
         private readonly RelayCommand addFilmCmd;
         private readonly RelayCommand editFilmCmd;
         private readonly RelayCommand deleteFilmCmd;
@@ -242,6 +247,77 @@ namespace WpfClient.ViewModel
             unitOfWork.Save();
             LoadFilms();
         }
+        #endregion Files
+        #region Users
+        private readonly RelayCommand addUserCmd;
+        private readonly RelayCommand editUserCmd;
+        private readonly RelayCommand deleteUserCmd;
+
+        public ICommand AddUserCmd => addUserCmd;
+        public ICommand EditUserCmd => editUserCmd;
+        public ICommand DeleteUserCmd => deleteUserCmd;
+        public void AddUser()
+        {
+            User user = new User
+            {
+                Name = "",
+                Surname = "",
+                Email = "",
+                Phone = "",
+            };
+            unitOfWork.UserRepo.Insert(user);
+
+            UserWindow userWindow = new UserWindow(user);
+
+
+            if (userWindow.ShowDialog() == true)
+            {
+                unitOfWork.Save();
+                LoadUsers();
+            }
+            else
+            {
+                unitOfWork.UserRepo.Delete(user);
+                unitOfWork.Save();
+            }
+        }
+        public void EditUser(object selectedUser)
+        {
+            User? user = selectedUser as User;
+            if (user == null) return;
+
+            User tmp = new User
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Surname = user.Surname,
+                Bookings = user.Bookings,
+                Email = user.Email,
+                Phone = user.Phone,
+            };
+            UserWindow userWindow = new UserWindow(tmp);
+
+
+            if (userWindow.ShowDialog() == true)
+            {
+                user.Name = userWindow.MyUser.Name;
+                user.Surname = userWindow.MyUser.Surname;
+                user.Email = userWindow.MyUser.Email;
+                user.Phone = userWindow.MyUser.Phone;
+                unitOfWork.UserRepo.Update(user);
+                unitOfWork.Save();
+                LoadUsers();
+            }
+        }
+        public void DeleteUser(object selectedUser)
+        {
+            User? user = selectedUser as User;
+            if (user == null) return;
+            unitOfWork.UserRepo.Delete(user);
+            unitOfWork.Save();
+            LoadUsers();
+        }
+        #endregion Users
         #endregion Admin menu
     }
 }

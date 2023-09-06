@@ -68,7 +68,7 @@
                         </Border>
                         <Border  BorderBrush="BlueViolet"  BorderThickness="3">
                             <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True" Height="300">
-                                <ListBox ItemsSource="{Binding Films}" Background="AliceBlue">
+                                <ListBox x:Name="FilmsListBox" ItemsSource="{Binding Films}" Background="AliceBlue">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
@@ -100,7 +100,66 @@
             <TabItem Header="Tickets"></TabItem>
             <TabItem Header="Bookings"></TabItem>
             <TabItem Header="Users">
-                
+                <Border  BorderBrush="CornflowerBlue"  BorderThickness="3">
+                    <StackPanel>
+                        <Border  BorderBrush="BlueViolet"  BorderThickness="3">
+                            <StackPanel Background="AliceBlue">
+                                <TextBlock HorizontalAlignment="Center">Full info</TextBlock>
+                                <Grid >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                                        <ColumnDefinition Width="1.5*"></ColumnDefinition>
+                                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                        <TextBlock Text="Name: "/>
+                                        <TextBlock Text="{Binding Path=SelectedItem.Name, ElementName=UsersListBox}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                        <TextBlock Text="Surname: "/>
+                                        <TextBlock Text="{Binding Path=SelectedItem.Surname, ElementName=UsersListBox}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                        <TextBlock Text="Email: "/>
+                                        <TextBlock Text="{Binding SelectedItem.Email, ElementName=UsersListBox}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="3" Orientation="Horizontal">
+                                        <TextBlock Text="Phone: "/>
+                                        <TextBlock Text="{Binding SelectedItem.Phone, ElementName=UsersListBox}"/>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                        <Border  BorderBrush="BlueViolet"  BorderThickness="3">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True" Height="350">
+                                <ListBox x:Name="UsersListBox" ItemsSource="{Binding Users}" Background="AliceBlue">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Margin="5, 0" Text="{Binding Path=Id}"/>
+                                                <TextBlock Margin="5, 0" Text="{Binding Path=Name}"/>
+                                                <TextBlock Margin="5, 0" Text="{Binding Path=Surname}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </ScrollViewer>
+                        </Border>
+                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0" Width="100" Command="{Binding LoadUsersCmd}" Content="Load Users" Template="{StaticResource btTemplate}"/>
+                            <Button Grid.Column="1" Width="100" Command="{Binding AddUserCmd}" Content="Add new" Template="{StaticResource btTemplate}"/>
+                            <Button Grid.Column="2" Width="100" Command="{Binding EditUserCmd}" Content="Edit" Template="{StaticResource btTemplate}"  CommandParameter="{Binding ElementName=UsersListBox, Path=SelectedItem}"/>
+                            <Button Grid.Column="3" Width="100" Command="{Binding DeleteUserCmd}" Content="Delete" Template="{StaticResource btTemplate}"  CommandParameter="{Binding ElementName=UsersListBox, Path=SelectedItem}"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
             </TabItem>
         </TabControl>
     </StackPanel>

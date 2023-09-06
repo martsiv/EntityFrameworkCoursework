@@ -23,6 +23,8 @@ namespace WpfClient.View
     [AddINotifyPropertyChangedInterface]
     public partial class FilmWindow : Window
     {
+        public Film? MyFilm { get; set; }
+        public ObservableCollection<Genre> Genres { get; set; }
         public FilmWindow(List<Genre> genres = null, Film film = null)
         {
             if (film != null)
@@ -50,8 +52,6 @@ namespace WpfClient.View
         {
             this.DialogResult = true;
         }
-        public Film? MyFilm { get; set; }
-        public ObservableCollection<Genre> Genres { get; set; }
 
         private void FilmGenre_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
