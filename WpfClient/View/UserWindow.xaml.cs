@@ -1,8 +1,5 @@
-﻿using data_access.Entities;
-using PropertyChanged;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,30 +17,11 @@ namespace WpfClient.View
     /// <summary>
     /// Interaction logic for UserWindow.xaml
     /// </summary>
-    [AddINotifyPropertyChangedInterface]
     public partial class UserWindow : Window
     {
-        public User? MyUser { get; set; }
-        public UserWindow(User user = null)
+        public UserWindow()
         {
-            if (user != null)
-                MyUser = user;
-            else
-                MyUser = new();
-           
             InitializeComponent();
-            this.DataContext = this;
         }
-
-        private void Button_Click_Cancel(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
-        private void Button_Click_OK(object sender, RoutedEventArgs e)
-        {
-            this.DialogResult = true;
-        }
-
     }
 }

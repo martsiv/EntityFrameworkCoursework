@@ -29,7 +29,7 @@ namespace WpfClient.ViewModel
         public void OpenUserWindow()
         {
             userWindow = new UserWindow();
-            userWindow.Closed += AdminWindow_Closed;
+            userWindow.Closed += UserWindow_Closed;
             userWindow.Show();
         }
         private void AdminWindow_Closed(object sender, EventArgs e)

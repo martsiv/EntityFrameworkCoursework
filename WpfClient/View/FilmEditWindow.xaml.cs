@@ -21,11 +21,11 @@ namespace WpfClient.View
     /// Interaction logic for FilmWindow.xaml
     /// </summary>
     [AddINotifyPropertyChangedInterface]
-    public partial class FilmWindow : Window
+    public partial class FilmEditWindow : Window
     {
         public Film? MyFilm { get; set; }
         public ObservableCollection<Genre> Genres { get; set; }
-        public FilmWindow(List<Genre> genres = null, Film film = null)
+        public FilmEditWindow(List<Genre> genres = null, Film film = null)
         {
             if (film != null)
                 MyFilm = film;

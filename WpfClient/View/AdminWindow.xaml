@@ -13,7 +13,7 @@
     </Window.DataContext>
     <StackPanel Background="AliceBlue">
         <TabControl>
-            <TabItem Header="Files">
+            <TabItem Header="Films">
                 <Border  BorderBrush="CornflowerBlue"  BorderThickness="3">
                     <StackPanel>
                         <Border  BorderBrush="BlueViolet"  BorderThickness="3">

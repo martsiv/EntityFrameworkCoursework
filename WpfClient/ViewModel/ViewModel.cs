@@ -159,7 +159,7 @@ namespace WpfClient.ViewModel
         #endregion  Load collections
 
         #region Admin menu
-        #region Files
+        #region Films
         private readonly RelayCommand addFilmCmd;
         private readonly RelayCommand editFilmCmd;
         private readonly RelayCommand deleteFilmCmd;
@@ -187,7 +187,7 @@ namespace WpfClient.ViewModel
             };
             unitOfWork.RatingRepo.Insert(rate);
 
-            FilmWindow filmWindow = new FilmWindow(Genres.ToList(), film);
+            FilmEditWindow filmWindow = new FilmEditWindow(Genres.ToList(), film);
 
 
             if (filmWindow.ShowDialog() == true)
@@ -220,7 +220,7 @@ namespace WpfClient.ViewModel
                 Genre = film.Genre,
                 MovieShows = film.MovieShows,
             };
-            FilmWindow filmWindow = new FilmWindow(Genres.ToList(), vm);
+            FilmEditWindow filmWindow = new FilmEditWindow(Genres.ToList(), vm);
 
 
             if (filmWindow.ShowDialog() == true)
@@ -247,7 +247,7 @@ namespace WpfClient.ViewModel
             unitOfWork.Save();
             LoadFilms();
         }
-        #endregion Files
+        #endregion Films
         #region Users
         private readonly RelayCommand addUserCmd;
         private readonly RelayCommand editUserCmd;
@@ -267,7 +267,7 @@ namespace WpfClient.ViewModel
             };
             unitOfWork.UserRepo.Insert(user);
 
-            UserWindow userWindow = new UserWindow(user);
+            UserEditWindow userWindow = new UserEditWindow(user);
 
 
             if (userWindow.ShowDialog() == true)
@@ -295,7 +295,7 @@ namespace WpfClient.ViewModel
                 Email = user.Email,
                 Phone = user.Phone,
             };
-            UserWindow userWindow = new UserWindow(tmp);
+            UserEditWindow userWindow = new UserEditWindow(tmp);
 
 
             if (userWindow.ShowDialog() == true)
