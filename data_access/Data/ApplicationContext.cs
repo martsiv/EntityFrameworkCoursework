@@ -23,10 +23,19 @@ namespace data_access.Data
         public DbSet<Ticket> Tickets { get; set; } = null!;
         public DbSet<TicketStatus> TicketStatuses { get; set; } = null!;
         public DbSet<User> Users { get; set; } = null!;
+        //Connection ---------------------------------------
+        public string connectionString;
 
-        public ApplicationContext(DbContextOptions<ApplicationContext> options)
-                       : base(options) { }
-       
+        public ApplicationContext()
+        {
+            connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Cinema;Integrated Security=True;Connect Timeout=2;";
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(connectionString);
+        }
+        //Connection ---------------------------------------
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new BookingConfiguration());

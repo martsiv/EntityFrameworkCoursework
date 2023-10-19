@@ -26,7 +26,7 @@ namespace data_access.Repositories
 
     public class UnitOfWork : IUoW, IDisposable
     {
-        private static ApplicationContext context = null;
+        private static ApplicationContext context =  new ApplicationContext();
         private IRepository<Booking>? bookingRepo = null;
         private IRepository<CinemaHall?> cinemaHallRepo = null;
         private IRepository<Film?> filmRepo = null;
@@ -36,10 +36,8 @@ namespace data_access.Repositories
         private IRepository<Ticket?> ticketRepo = null;
         private IRepository<TicketStatus?> ticketStatusRepo = null;
         private IRepository<User?> userRepo = null;
-        public UnitOfWork(DbContextOptions<ApplicationContext> option)
-        {
-            ApplicationContext context = new ApplicationContext(option);
-        }
+        public UnitOfWork() { }
+        
         public IRepository<Booking> BookingRepo
         {
             get

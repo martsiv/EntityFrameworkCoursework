@@ -1,0 +1,167 @@
+﻿<Window x:Class="WpfClient.View.AdminWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfClient.View"
+        xmlns:vm="clr-namespace:WpfClient.ViewModel"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=vm:ViewModel}"
+        Title="MainWindow" Height="500" Width="800" MinHeight="500" MaxHeight="500" MinWidth="400">
+    <Window.DataContext>
+        <vm:ViewModel/>
+    </Window.DataContext>
+    <StackPanel Background="AliceBlue">
+        <TabControl>
+            <TabItem Header="Films">
+                <Border  BorderBrush="CornflowerBlue"  BorderThickness="3">
+                    <StackPanel>
+                        <Border  BorderBrush="BlueViolet"  BorderThickness="3">
+                            <StackPanel Background="AliceBlue">
+                                <TextBlock HorizontalAlignment="Center">Full info</TextBlock>
+                                <Grid >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                                        <ColumnDefinition Width="1.5*"></ColumnDefinition>
+                                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
+                                        <TextBlock Text="Name: "/>
+                                        <TextBlock Text="{Binding Path=SelectedItem.Name, ElementName=FilmsListBox}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal">
+                                        <TextBlock Text="Year: "/>
+                                        <TextBlock Text="{Binding SelectedItem.Year, ElementName=FilmsListBox, Converter={StaticResource DateTimeToYearConverter}}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Horizontal">
+                                        <TextBlock Text="Director: "/>
+                                        <TextBlock Text="{Binding SelectedItem.Director, ElementName=FilmsListBox}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal">
+                                        <TextBlock Text="Genre: "/>
+                                        <TextBlock Text="{Binding SelectedItem.Genre.Name, ElementName=FilmsListBox}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Grid.Row="1"  Grid.RowSpan="2" Orientation="Horizontal">
+                                        <TextBlock Text="Duration: "/>
+                                        <TextBlock Text="{Binding SelectedItem.Duration, ElementName=FilmsListBox}"/>
+                                    </StackPanel>
+                                    <TextBlock Grid.Column="2" Grid.Row="0" Text="Description: "/>
+                                    <StackPanel Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Orientation="Horizontal">
+                                        <TextBlock Text="{Binding SelectedItem.Description, ElementName=FilmsListBox}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="3" Grid.Row="0" Orientation="Horizontal">
+                                        <TextBlock Text="Rating: "/>
+                                        <TextBlock Text="{Binding SelectedItem.Rating.Estimate, ElementName=FilmsListBox}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="3" Grid.Row="1" Grid.RowSpan="2" Orientation="Horizontal">
+                                        <TextBlock Text="Review: "/>
+                                        <TextBlock Text="{Binding SelectedItem.Description, ElementName=FilmsListBox}"/>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                        <Border  BorderBrush="BlueViolet"  BorderThickness="3">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True" Height="300">
+                                <ListBox x:Name="FilmsListBox" ItemsSource="{Binding Films}" Background="AliceBlue">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Margin="5, 0" Text="{Binding Path=Id}"/>
+                                                <TextBlock Margin="5, 0" Text="{Binding Path=Name}"/>
+                                                <TextBlock Margin="5, 0" Text="{Binding Path=Year, Converter={StaticResource DateTimeToYearConverter}}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </ScrollViewer>
+                        </Border>
+                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0" Width="100" Command="{Binding  LoadFilmsCmd}" Content="Load Films" Template="{StaticResource btTemplate}"/>
+                            <Button Grid.Column="1" Width="100" Command="{Binding AddFilmCmd}" Content="Add new" Template="{StaticResource btTemplate}"/>
+                            <Button Grid.Column="2" Width="100" Command="{Binding EditFilmCmd}" Content="Edit" Template="{StaticResource btTemplate}"  CommandParameter="{Binding ElementName=FilmsListBox, Path=SelectedItem}"/>
+                            <Button Grid.Column="3" Width="100" Command="{Binding DeleteFilmCmd}" Content="Delete" Template="{StaticResource btTemplate}"  CommandParameter="{Binding ElementName=FilmsListBox, Path=SelectedItem}"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </TabItem>
+            <TabItem Header="Shows"></TabItem>
+            <TabItem Header="Tickets"></TabItem>
+            <TabItem Header="Bookings"></TabItem>
+            <TabItem Header="Users">
+                <Border  BorderBrush="CornflowerBlue"  BorderThickness="3">
+                    <StackPanel>
+                        <Border  BorderBrush="BlueViolet"  BorderThickness="3">
+                            <StackPanel Background="AliceBlue">
+                                <TextBlock HorizontalAlignment="Center">Full info</TextBlock>
+                                <Grid >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                                        <ColumnDefinition Width="1.5*"></ColumnDefinition>
+                                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                        <TextBlock Text="Name: "/>
+                                        <TextBlock Text="{Binding Path=SelectedItem.Name, ElementName=UsersListBox}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                        <TextBlock Text="Surname: "/>
+                                        <TextBlock Text="{Binding Path=SelectedItem.Surname, ElementName=UsersListBox}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                        <TextBlock Text="Email: "/>
+                                        <TextBlock Text="{Binding SelectedItem.Email, ElementName=UsersListBox}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="3" Orientation="Horizontal">
+                                        <TextBlock Text="Phone: "/>
+                                        <TextBlock Text="{Binding SelectedItem.Phone, ElementName=UsersListBox}"/>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                        <Border  BorderBrush="BlueViolet"  BorderThickness="3">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True" Height="350">
+                                <ListBox x:Name="UsersListBox" ItemsSource="{Binding Users}" Background="AliceBlue">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Margin="5, 0" Text="{Binding Path=Id}"/>
+                                                <TextBlock Margin="5, 0" Text="{Binding Path=Name}"/>
+                                                <TextBlock Margin="5, 0" Text="{Binding Path=Surname}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </ScrollViewer>
+                        </Border>
+                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0" Width="100" Command="{Binding LoadUsersCmd}" Content="Load Users" Template="{StaticResource btTemplate}"/>
+                            <Button Grid.Column="1" Width="100" Command="{Binding AddUserCmd}" Content="Add new" Template="{StaticResource btTemplate}"/>
+                            <Button Grid.Column="2" Width="100" Command="{Binding EditUserCmd}" Content="Edit" Template="{StaticResource btTemplate}"  CommandParameter="{Binding ElementName=UsersListBox, Path=SelectedItem}"/>
+                            <Button Grid.Column="3" Width="100" Command="{Binding DeleteUserCmd}" Content="Delete" Template="{StaticResource btTemplate}"  CommandParameter="{Binding ElementName=UsersListBox, Path=SelectedItem}"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </TabItem>
+        </TabControl>
+    </StackPanel>
+</Window>
+

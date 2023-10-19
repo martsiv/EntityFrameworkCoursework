@@ -1,0 +1,40 @@
+﻿<Window x:Class="WpfClient.View.UserWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfClient.View"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+
+        xmlns:vm="clr-namespace:WpfClient.ViewModel"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=vm:ViewModel}"
+        Title="UserWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <vm:ViewModel/>
+    </Window.DataContext>
+    <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True" Height="Auto">
+        <DockPanel>
+            <Border DockPanel.Dock="Top" Background="Azure">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" Padding="10">
+                    Cinema
+                </TextBlock>
+            </Border>
+            <UniformGrid DockPanel.Dock="Top">
+                <TextBlock>Date: </TextBlock>
+                <DatePicker Name="datePicker1" IsDropDownOpen="False" SelectedDateFormat="Short" DisplayDateStart="{x:Static sys:DateTime.Now}"/>
+            </UniformGrid>
+            <UniformGrid DockPanel.Dock="Top">
+                <TextBlock>Choose cinema hall: </TextBlock>
+                <ComboBox/>
+            </UniformGrid>
+            <UniformGrid DockPanel.Dock="Top">
+                <TextBlock>Choose genre: </TextBlock>
+                <ComboBox/>
+            </UniformGrid>
+            <Border VerticalAlignment="Stretch" Background="LightSkyBlue">
+                <TextBlock>List with films. Use a template for movies with the display of session hours and the ability to choose a session </TextBlock>
+            </Border>
+        </DockPanel>
+    </ScrollViewer>
+</Window>

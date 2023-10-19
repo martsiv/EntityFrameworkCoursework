@@ -15,7 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WpfClient.ViewModel;
 
-namespace WpfClient
+namespace WpfClient.View
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

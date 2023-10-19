@@ -38,6 +38,76 @@ namespace data_access.Data
                 new CinemaHall() { Id = 2, HallName="Black hall", NumberOfSeats=100},
                 new CinemaHall() { Id = 3, HallName="Green hall", NumberOfSeats=30},
             });
+
+            modelBuilder.Entity<User>().HasData(new User[]
+            {
+                new User() { Id = 1, Name="John", Surname="Green", Email="johngreen@gmail.com", Phone="0953829563"},
+                new User() { Id = 2, Name="Bella", Surname="White", Email="bellawhite@gmail.com", Phone="0985390462"},
+                new User() { Id = 3, Name="Frank", Surname="Black", Email="frankblach@gmail.com", Phone="0975849602"},
+            });
+
+            // Ініціалізація фільмів, рейтингів та сеансів
+            for (int i = 1; i <= 15; i++)
+            {
+                modelBuilder.Entity<Film>().HasData(new Film
+                {
+                    Id = i,
+                    Name = $"Film {i}",
+                    Year = DateTime.Now.AddYears(-i),
+                    Description = $"Description to film {i}",
+                    Director = $"Direcor {i}",
+                    Duration = TimeSpan.FromMinutes(120),
+                    GenreId = i % 10 + 1,
+                });
+
+                modelBuilder.Entity<Rating>().HasData(new Rating
+                {
+                    Id = i,
+                    Estimate = i % 5 + 1,
+                    Review = $"Review to film {i}",
+                    FilmId = i,
+                });
+
+                // Ініціалізація сеансів на наступний тиждень
+                DateTime currentDate = DateTime.Now.AddDays(1);
+                for (int j = 1; j <= 7; j++)
+                {
+                    for (int k = 1; k <= 10; k++)
+                    {
+                        modelBuilder.Entity<MovieShow>().HasData(new MovieShow
+                        {
+                            Id = (i - 1) * 70 + (j - 1) * 10 + k,
+                            StartDateTime = currentDate.Date.AddHours(10 + k),
+                            FilmId = i,
+                            CinemaHallId = j % 3 + 1,
+                        });
+                    }
+                    currentDate = currentDate.AddDays(1);
+                }
+            }
+            // Ініціалізація квитків для всіх сеансів
+            int ticketIdCounter = 1;
+            var random = new Random();
+
+            // Перебираємо всі сеанси
+            foreach (var movieShowId in Enumerable.Range(1, 15 * 7 * 10)) // 15 фільмів * 7 днів * 10 сеансів
+            {
+                var ticketStatusId = 1;
+                var price = random.Next(50, 200); // Випадкова ціна квитка
+                var seatNumber = random.Next(1, 101); // Випадковий номер місця
+
+                modelBuilder.Entity<Ticket>().HasData(new Ticket
+                {
+                    Id = ticketIdCounter,
+                    SeatNumber = seatNumber,
+                    Price = price,
+                    TicketStatusId = ticketStatusId,
+                    MovieShowId = movieShowId,
+                });
+
+                ticketIdCounter++;
+            }
+
         }
     }
 }
